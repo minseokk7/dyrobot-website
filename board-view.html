@@ -154,10 +154,13 @@
         showToast('비밀번호가 일치하지 않습니다.', 'error');
         return;
       }
+      
+      const action = modalAction;
       closeModal();
-      if (modalAction === 'edit') {
+      
+      if (action === 'edit') {
         location.href = 'board-write.html?edit=' + postId;
-      } else if (modalAction === 'delete') {
+      } else if (action === 'delete') {
         try {
           const { error } = await db.from('posts').delete().eq('id', postId);
           if (error) throw error;
