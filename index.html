@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="동양미래대학교 로봇소프트웨어과 - 로봇 소프트웨어 분야를 이끌 인재양성의 중심">
+  <title>로봇소프트웨어과 | 동양미래대학교</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon">🤖</div>
+        로봇소프트웨어과
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html" class="active">학과소개</a>
+        <a href="#curriculum">교육과정</a>
+        <a href="#professors">교수소개</a>
+        <a href="#clubs">전공동아리</a>
+        <a href="board.html">자유게시판</a>
+      </div>
+      <div class="hamburger" id="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg" style="background-image: url('assets/images/hero-robot.png')"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">🎓 Department of Robot Software</div>
+      <h1>
+        <span class="kr">로봇소프트웨어과</span>
+        Robot Software
+      </h1>
+      <p class="hero-desc">로봇 소프트웨어 분야를 이끌 인재양성의 중심. 4차 산업혁명 시대를 선도하는 로봇 소프트웨어 전문 인력을 양성합니다.</p>
+      <div class="hero-info">
+        <div class="hero-info-item">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          4호관 206호
+        </div>
+        <div class="hero-info-item">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          02-2610-1832
+        </div>
+        <div class="hero-info-item">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          yjyang@dongyang.ac.kr
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <div class="main-grid">
+    <!-- Left Column -->
+    <div style="display:flex;flex-direction:column;gap:24px;">
+      <!-- Notices -->
+      <div class="card">
+        <div class="card-header">
+          <h3><span class="dot"></span> 학과공지</h3>
+          <button class="more-btn">+</button>
+        </div>
+        <div class="card-body">
+          <div class="notice-list">
+            <div class="notice-item">
+              <span class="tag">채용</span>
+              <h4>[반도체협회] 부트캠프 전문대학 대상 ASM 코리아 3차 채용 공고</h4>
+              <span class="date">2026.04.28</span>
+            </div>
+            <div class="notice-item">
+              <span class="tag">학사</span>
+              <h4>2026학년도 1학기 「일반 질병」 출석 인정 절차 변경 안내</h4>
+              <span class="date">2026.04.23</span>
+            </div>
+            <div class="notice-item">
+              <span class="tag">수업</span>
+              <h4>스마트팩토리실무(C4강좌) 휴보강 공지</h4>
+              <span class="date">2026.04.17</span>
+            </div>
+            <div class="notice-item">
+              <span class="tag">행사</span>
+              <h4>2026 로봇소프트웨어 경진대회 참가자 모집 안내</h4>
+              <span class="date">2026.04.10</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Clubs -->
+      <div class="card" id="clubs">
+        <div class="card-header">
+          <h3><span class="dot"></span> 전공동아리</h3>
+        </div>
+        <div class="club-tabs">
+          <button class="club-tab active" onclick="switchClub(this, 'mas')">MAS</button>
+          <button class="club-tab" onclick="switchClub(this, 'mca')">MCA</button>
+          <button class="club-tab" onclick="switchClub(this, 'moas')">MoAS</button>
+          <button class="club-tab" onclick="switchClub(this, 'smart')">SMART</button>
+          <button class="club-tab" onclick="switchClub(this, 'ur')">UR</button>
+        </div>
+        <div class="club-content" id="clubContent">
+          <div class="club-img">
+            <img src="assets/images/mascot.png" alt="MAS 동아리">
+          </div>
+          <div class="club-info">
+            <h4>MAS (Mobile Application Software)</h4>
+            <p>MAS는 학교에서 배우는 것 뿐만 아니라 더 나아가 사회에 도움이 될 수 있는 로봇을 직접 만들어 각종 대회에 출전해 학생들끼리 서로 협업을 하며 자신의 전공지식과 역량을 같이 키워나가는 로봇자동화공학부 전공동아리입니다. 모바일 앱 개발과 IoT 프로젝트를 중심으로 활동합니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column -->
+    <div style="display:flex;flex-direction:column;gap:24px;">
+      <!-- Services -->
+      <div class="card">
+        <div class="card-header">
+          <h3><span class="dot"></span> 주요 서비스</h3>
+        </div>
+        <div class="card-body">
+          <div class="service-grid">
+            <div class="service-item">
+              <div class="icon">📋</div>
+              <span>e 서비스</span>
+            </div>
+            <div class="service-item">
+              <div class="icon">📚</div>
+              <span>도서관</span>
+            </div>
+            <div class="service-item">
+              <div class="icon">🏆</div>
+              <span>수강신청</span>
+            </div>
+            <div class="service-item">
+              <div class="icon">📄</div>
+              <span>증명서 발급</span>
+            </div>
+            <div class="service-item">
+              <div class="icon">💻</div>
+              <span>MS오피스 365</span>
+            </div>
+            <div class="service-item">
+              <div class="icon">👤</div>
+              <span>학생종합관리</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Board -->
+      <div class="card">
+        <div class="card-header">
+          <h3><span class="dot"></span> 자유게시판</h3>
+          <a href="board.html" class="more-btn">+</a>
+        </div>
+        <div class="card-body">
+          <div class="notice-list" id="recentPosts">
+            <div class="empty-state">
+              <div class="icon">💬</div>
+              <p>최근 게시물이 없습니다.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div>
+        <div class="footer-logo">🤖 로봇소프트웨어과</div>
+        <p class="footer-info" style="margin-top:8px;">동양미래대학교 로봇소프트웨어과<br>서울특별시 구로구 경인로 445</p>
+      </div>
+      <p class="footer-info">© 2026 동양미래대학교 로봇소프트웨어과. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    function switchClub(btn, id) {
+      document.querySelectorAll('.club-tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      const clubs = {
+        mas: { name: 'MAS (Mobile Application Software)', desc: 'MAS는 학교에서 배우는 것 뿐만 아니라 더 나아가 사회에 도움이 될 수 있는 로봇을 직접 만들어 각종 대회에 출전해 학생들끼리 서로 협업을 하며 자신의 전공지식과 역량을 같이 키워나가는 전공동아리입니다.' },
+        mca: { name: 'MCA (Micro Controller Application)', desc: '마이크로컨트롤러 기반 임베디드 시스템 개발을 중심으로 활동하는 동아리입니다. Arduino, STM32 등을 활용한 하드웨어 프로젝트를 진행합니다.' },
+        moas: { name: 'MoAS (Mobile & AI Software)', desc: '모바일 앱과 인공지능 소프트웨어 개발을 중심으로 활동하는 동아리입니다. 딥러닝, 영상처리 등 AI 기술을 로봇에 적용합니다.' },
+        smart: { name: 'SMART (Smart Manufacturing & Automation Robot Team)', desc: '스마트 팩토리와 자동화 로봇 기술을 연구하는 동아리입니다. PLC, SCADA 등 산업자동화 기술을 학습합니다.' },
+        ur: { name: 'UR (Universal Robot)', desc: '협동로봇(Cobot) 프로그래밍과 운용을 중심으로 활동하는 동아리입니다. Universal Robots의 UR 시리즈를 활용한 프로젝트를 진행합니다.' }
+      };
+      const c = clubs[id];
+      document.querySelector('.club-info h4').textContent = c.name;
+      document.querySelector('.club-info p').textContent = c.desc;
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="js/supabase-config.js"></script>
+  <script>
+    async function loadRecentPosts() {
+      try {
+        const { data } = await db
+          .from('posts').select('id, title, created_at')
+          .order('created_at', { ascending: false }).limit(4);
+        if (!data || data.length === 0) return;
+        const container = document.getElementById('recentPosts');
+        container.innerHTML = data.map(p => `
+          <div class="notice-item" onclick="location.href='board-view.html?id=${p.id}'">
+            <h4>${p.title}</h4>
+            <span class="date">${new Date(p.created_at).toLocaleDateString('ko-KR')}</span>
+          </div>`).join('');
+      } catch(e) { console.log('게시글 로드 실패:', e); }
+    }
+    loadRecentPosts();
+  </script>
+</body>
+</html>

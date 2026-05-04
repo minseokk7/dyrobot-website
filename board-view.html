@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>게시글 | 로봇소프트웨어과</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon">🤖</div>
+        로봇소프트웨어과
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">학과소개</a>
+        <a href="index.html#curriculum">교육과정</a>
+        <a href="index.html#professors">교수소개</a>
+        <a href="index.html#clubs">전공동아리</a>
+        <a href="board.html" class="active">자유게시판</a>
+      </div>
+      <div class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="main-full">
+    <!-- Post Content -->
+    <div class="post-view" id="postView">
+      <div class="post-header">
+        <h1 id="postTitle">로딩 중...</h1>
+        <div class="post-meta">
+          <span id="postAuthor">👤 —</span>
+          <span id="postDate">📅 —</span>
+          <span id="postViews">👁 —</span>
+        </div>
+      </div>
+      <div class="post-body" id="postBody">
+        <div class="loading-spinner"><div class="spinner"></div></div>
+      </div>
+      <div class="post-footer">
+        <a href="board.html" class="btn btn-secondary">← 목록으로</a>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-secondary" onclick="editPost()">✏️ 수정</button>
+          <button class="btn btn-danger" onclick="deletePost()">🗑 삭제</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comments -->
+    <div class="comments-section">
+      <div class="comments-header">💬 댓글 <span class="count" id="commentCount">0</span></div>
+      <div class="comment-form">
+        <div class="form-inline">
+          <input type="text" id="cmtAuthor" placeholder="작성자" maxlength="20">
+          <input type="password" id="cmtPassword" placeholder="비밀번호" maxlength="20">
+        </div>
+        <textarea id="cmtContent" placeholder="댓글을 입력하세요"></textarea>
+        <div class="comment-submit">
+          <button class="btn btn-primary btn-sm" onclick="submitComment()">댓글 등록</button>
+        </div>
+      </div>
+      <div id="commentList"></div>
+    </div>
+  </div>
+
+  <!-- Password Modal -->
+  <div class="modal-overlay" id="passwordModal">
+    <div class="modal">
+      <h3 id="modalTitle">비밀번호 확인</h3>
+      <input type="password" id="modalPassword" placeholder="비밀번호를 입력하세요" onkeydown="if(event.key==='Enter') confirmModal()">
+      <div class="modal-actions">
+        <button class="btn btn-secondary btn-sm" onclick="closeModal()">취소</button>
+        <button class="btn btn-primary btn-sm" onclick="confirmModal()">확인</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div>
+        <div class="footer-logo">🤖 로봇소프트웨어과</div>
+        <p class="footer-info" style="margin-top:8px;">동양미래대학교 로봇소프트웨어과</p>
+      </div>
+      <p class="footer-info">© 2026 동양미래대학교 로봇소프트웨어과. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/comments.js"></script>
+  <script>
+    const postId = new URLSearchParams(location.search).get('id');
+    let postData = null;
+    let modalAction = null;
+
+    if (!postId) { location.href = 'board.html'; }
+
+    // Load post
+    async function loadPost() {
+      try {
+        // Increment views
+        await db.rpc('increment_views', { post_id: parseInt(postId) }).catch(() => {
+          // fallback if RPC not available
+          return db.from('posts').select('views').eq('id', postId).single()
+            .then(({ data }) => db.from('posts').update({ views: (data?.views || 0) + 1 }).eq('id', postId));
+        });
+
+        const { data, error } = await db
+          .from('posts').select('*').eq('id', postId).single();
+        if (error) throw error;
+        postData = data;
+        document.getElementById('postTitle').textContent = data.title;
+        document.getElementById('postAuthor').textContent = '👤 ' + data.author;
+        document.getElementById('postDate').textContent = '📅 ' + new Date(data.created_at).toLocaleDateString('ko-KR');
+        document.getElementById('postViews').textContent = '👁 ' + (data.views || 0);
+        document.getElementById('postBody').textContent = data.content;
+        document.title = data.title + ' | 로봇소프트웨어과';
+      } catch (err) {
+        document.getElementById('postBody').innerHTML = '<div class="empty-state"><p>게시글을 찾을 수 없습니다.</p></div>';
+      }
+    }
+
+    function editPost() {
+      modalAction = 'edit';
+      document.getElementById('modalTitle').textContent = '수정 비밀번호 확인';
+      document.getElementById('passwordModal').classList.add('active');
+      document.getElementById('modalPassword').focus();
+    }
+
+    function deletePost() {
+      modalAction = 'delete';
+      document.getElementById('modalTitle').textContent = '삭제 비밀번호 확인';
+      document.getElementById('passwordModal').classList.add('active');
+      document.getElementById('modalPassword').focus();
+    }
+
+    function closeModal() {
+      document.getElementById('passwordModal').classList.remove('active');
+      document.getElementById('modalPassword').value = '';
+      modalAction = null;
+    }
+
+    async function confirmModal() {
+      const pw = document.getElementById('modalPassword').value;
+      if (!pw) { showToast('비밀번호를 입력하세요.', 'error'); return; }
+      if (!postData || pw !== postData.password) {
+        showToast('비밀번호가 일치하지 않습니다.', 'error');
+        return;
+      }
+      closeModal();
+      if (modalAction === 'edit') {
+        location.href = 'board-write.html?edit=' + postId;
+      } else if (modalAction === 'delete') {
+        try {
+          const { error } = await db.from('posts').delete().eq('id', postId);
+          if (error) throw error;
+          showToast('게시글이 삭제되었습니다.', 'success');
+          setTimeout(() => location.href = 'board.html', 1200);
+        } catch (err) {
+          showToast('삭제 실패: ' + err.message, 'error');
+        }
+      }
+    }
+
+    // Click outside modal to close
+    document.getElementById('passwordModal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+
+    function showToast(msg, type = 'success') {
+      const toast = document.createElement('div');
+      toast.className = 'toast ' + type;
+      toast.textContent = msg;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3200);
+    }
+
+    loadPost();
+    loadComments(postId);
+  </script>
+</body>
+</html>

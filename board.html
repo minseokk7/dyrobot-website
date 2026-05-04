@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="로봇소프트웨어과 자유게시판 - 자유롭게 소통하는 공간">
+  <title>자유게시판 | 로봇소프트웨어과</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon">🤖</div>
+        로봇소프트웨어과
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">학과소개</a>
+        <a href="index.html#curriculum">교육과정</a>
+        <a href="index.html#professors">교수소개</a>
+        <a href="index.html#clubs">전공동아리</a>
+        <a href="board.html" class="active">자유게시판</a>
+      </div>
+      <div class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="main-full">
+    <div class="board-container">
+      <div class="board-toolbar">
+        <h2>📋 자유게시판 <span class="count" id="postCount">총 0건</span></h2>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <div class="board-search">
+            <input type="text" id="searchInput" placeholder="검색어를 입력하세요" onkeydown="if(event.key==='Enter') searchPosts()">
+            <button class="btn btn-secondary" onclick="searchPosts()">검색</button>
+          </div>
+          <a href="board-write.html" class="btn btn-primary">✏️ 글쓰기</a>
+        </div>
+      </div>
+
+      <table class="board-table">
+        <thead>
+          <tr>
+            <th style="width:70px">번호</th>
+            <th>제목</th>
+            <th style="width:100px">작성자</th>
+            <th style="width:110px">작성일</th>
+            <th style="width:70px">조회</th>
+          </tr>
+        </thead>
+        <tbody id="postTableBody">
+          <tr>
+            <td colspan="5">
+              <div class="loading-spinner"><div class="spinner"></div></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="board-actions">
+        <div class="pagination" id="pagination"></div>
+        <div></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div>
+        <div class="footer-logo">🤖 로봇소프트웨어과</div>
+        <p class="footer-info" style="margin-top:8px;">동양미래대학교 로봇소프트웨어과</p>
+      </div>
+      <p class="footer-info">© 2026 동양미래대학교 로봇소프트웨어과. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/board.js"></script>
+</body>
+</html>
